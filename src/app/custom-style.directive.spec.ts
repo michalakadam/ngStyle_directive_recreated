@@ -1,5 +1,5 @@
 import { CustomStyleDirective } from './custom-style.directive';
-import { ElementRef, Component, DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
