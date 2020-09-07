@@ -3,16 +3,16 @@ import { Component, DebugElement } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-@Component({
-  template: `
-    <div>No directive used</div>
-    <div [customStyle]="{'background-color': 'red', 'color': 'green'}">Correct use</div>
-    <h1 [customStyle]="{'font-size.px': '18', 'min-height.vh': '20'}">With units</h1>
-  `
-})
-class TestComponent {}
+describe('CustomStyleDirective with proper style', () => {
+  @Component({
+    template: `
+      <div>No directive used</div>
+      <div [customStyle]="{'background-color': 'red', 'color': 'green'}">Correct use</div>
+      <h1 [customStyle]="{'font-size.px': '18', 'min-height.vh': '20'}">With units</h1>
+    `
+  })
+  class TestComponent {}
 
-describe('CustomStyleDirective', () => {
   let fixture: ComponentFixture<TestComponent>;
   let elementsWithDirective: DebugElement[];
   let elementWithoutDirective: DebugElement;
@@ -44,3 +44,25 @@ describe('CustomStyleDirective', () => {
     expect(elementsWithDirective[1].styles.minHeight).toBe('20vh');
   })
 });
+
+describe('CustomStyleDirective with not existing style', () => {
+  @Component({
+    template: `
+      <div [customStyle]="{'frontground-color': 'red'}">Style with typo applied</div>
+    `
+  })
+  class FaultyComponent {}
+
+  it('should throw error when improper style is applied', () => {
+    const fixture = TestBed.configureTestingModule({
+      declarations: [
+        FaultyComponent, 
+        CustomStyleDirective,
+      ],
+    }).createComponent(FaultyComponent);
+    
+    expect(() => {
+      fixture.detectChanges()
+    }).toThrowError();
+  });
+})

@@ -23,9 +23,6 @@ export class CustomStyleDirective implements OnChanges {
       if (this.el.nativeElement.style[formattedKey] === undefined) {
         throw new Error(`Property ${formattedKey} does not exist on element's style object.`);
       }
-      if (!this.style[keyWithUnit]) {
-        throw new Error(`Property ${keyWithUnit} has no value.`);
-      }
 
       this.el.nativeElement.style[formattedKey] = this.style[keyWithUnit] + unit;
     });
