@@ -1,1 +1,11 @@
-<div [customStyle]="{'background-color': 'red', 'font-size.px': '36'}">Hello there!</div>
+<div class="component-container">
+    <mat-form-field class="form-field">
+        <mat-label>Modify element content</mat-label>
+        <input matInput type="text" [(ngModel)]="elementContent">
+        <button mat-button *ngIf="elementContent" matSuffix mat-icon-button aria-label="Clear" (click)="elementContent=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <div [customStyle]="customStyles" class="content">{{ elementContent }}</div>
+</div>
