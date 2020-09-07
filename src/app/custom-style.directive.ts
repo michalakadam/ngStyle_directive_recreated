@@ -1,15 +1,15 @@
-import { Directive, ElementRef, Input, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, Input, SimpleChanges, OnChanges } from '@angular/core';
 
 @Directive({
   selector: '[customStyle]'
 })
-export class CustomStyleDirective implements AfterViewInit {  
+export class CustomStyleDirective implements OnChanges {  
 
   @Input('customStyle') style: object;
 
   constructor(private el: ElementRef) { }
 
-  ngAfterViewInit() {
+  ngOnChanges(changes: SimpleChanges) {
     if (Object.keys(this.style).length) {
       this.applyStyles();
     }

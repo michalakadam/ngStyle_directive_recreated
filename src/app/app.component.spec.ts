@@ -1,5 +1,5 @@
 import { TestBed, async, ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { AppComponent, Style } from './app.component';
 import { By } from '@angular/platform-browser';
 import { AppModule } from './app.module';
 
@@ -57,5 +57,54 @@ describe('AppComponent', () => {
 
     expect(component.elementContent).toBe(content);
     expect(contentContainer.textContent).toBe(content);
-  })
+  });
+
+  it('`Apply style` button should be disabled when form is not filled', () => {
+    const button = fixture.debugElement.query(By.css('.form-container button')).nativeElement;
+
+    expect(button.disabled).toBeTrue();
+
+    component.newStyleForm.patchValue({
+      key: 'background-color',
+    });
+    fixture.detectChanges();
+
+    expect(button.disabled).toBeTrue();
+  });
+
+  it('`Apply style` button should be enabled when form is filled', () => {
+    const button = fixture.debugElement.query(By.css('.form-container button')).nativeElement;
+    
+    component.newStyleForm.patchValue({
+      key: 'background-color',
+      value: 'red',
+    });
+    fixture.detectChanges();
+
+    expect(button.disabled).toBeFalse();
+  });
+
+
+  it('should modify style when correct values are entered', () => {
+    const contentContainer = fixture.debugElement.query(By.css('.content')).nativeElement;
+
+    addStyle(new Style('font-size', '44', 'px'));
+    addStyle(new Style('background-color', 'maroon'));
+
+    expect(contentContainer.style.fontSize).toBe('44px');
+    expect(contentContainer.style.backgroundColor).toBe('maroon');
+  });
+
+  const addStyle = (newStyle: Style) => {
+    const button = fixture.debugElement.query(By.css('.form-container button')).nativeElement;
+    component.newStyleForm.patchValue({
+      key: newStyle.key,
+      value: newStyle.value,
+      unit: newStyle.unit,
+    });
+    fixture.detectChanges();
+
+    button.click();
+    fixture.detectChanges();
+  }
 });

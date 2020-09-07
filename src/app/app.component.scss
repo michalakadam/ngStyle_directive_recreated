@@ -1,7 +1,19 @@
 .component-container {
     margin: 10%;
 
-    .content-form-field {
+    .form-field {
         width: 200px;
+    }
+
+    .form-container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2%;
+        max-width: 200px;
+
+        button {
+            width: 150px;
+        }
     }
 }

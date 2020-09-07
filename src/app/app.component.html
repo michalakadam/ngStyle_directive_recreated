@@ -1,11 +1,39 @@
 <div class="component-container">
+    <h1>Modify element content</h1>
     <mat-form-field class="form-field">
-        <mat-label>Modify element content</mat-label>
+        <mat-label>Element content</mat-label>
         <input matInput type="text" [(ngModel)]="elementContent">
         <button mat-button *ngIf="elementContent" matSuffix mat-icon-button aria-label="Clear" (click)="elementContent=''">
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
 
+    <h1>Modify element style</h1>
+    <form [formGroup]="newStyleForm" #formDirective="ngForm" (ngSubmit)="onAddNewStyle(formDirective)" class="form-container">
+      <mat-form-field class="form-field">
+        <mat-label>Style key</mat-label>
+        <input matInput formControlName="key" placeholder="Ex. background-color">
+        <mat-error>
+            Style key is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Style value</mat-label>
+        <input matInput formControlName="value" placeholder="Ex. maroon">
+        <mat-error>
+            Style value is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Style unit (optional)</mat-label>
+        <input matInput formControlName="unit" placeholder="Ex. px">
+      </mat-form-field>
+
+      <button mat-button type="submit" [disabled]="!newStyleForm.valid">Apply style</button>
+    </form>
+
+    <h1>Result:</h1>
     <div [customStyle]="customStyles" class="content">{{ elementContent }}</div>
 </div>
